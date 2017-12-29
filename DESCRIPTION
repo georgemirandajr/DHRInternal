@@ -1,0 +1,17 @@
+Package: DHRInternal
+Type: Package
+Title: DHR Data Analytics 
+Version: 0.1.0
+Imports:
+    dplyr (>= 0.7.4)
+Author: George Miranda
+Maintainer: George Miranda <georgemirandajr@gmail.com>
+Description: A package for DHR analysts to get started in R quickly.
+    It provides functions for retrieving file specifications of the weekly data extracts.
+    Also included is a helper function to find the file path of the most recent extract.
+    A CSS file and DHR logos are provided in the package to help build things faster.
+Depends: R (>= 3.2.5)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
