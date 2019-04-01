@@ -3,7 +3,8 @@ Type: Package
 Title: DHR Data Analytics 
 Version: 0.1.0
 Imports:
-    dplyr (>= 0.7.4)
+    dplyr (>= 0.7.4),
+    stringr
 Author: George Miranda
 Maintainer: George Miranda <georgemirandajr@gmail.com>
 Description: A package for DHR analysts to get started in R quickly.
@@ -11,7 +12,7 @@ Description: A package for DHR analysts to get started in R quickly.
     Also included is a helper function to find the file path of the most recent extract.
     A CSS file and DHR logos are provided in the package to help build things faster.
 Depends: R (>= 3.2.5)
-License: What license is it under?
+License: GPL
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
