@@ -6,10 +6,11 @@
 #' @param drop A character vector that allows the user to drop certain fields when importing a text file. This is useful when there are only a few fields that are unwanted. Defaults to NULL, which effectively keeps all fields when importing.
 #' @return By default, import_specs() with no arguments specified returns a data.frame object containing all the names of the text files and their corresponding fields, start points, end points, and field widths. The resulting data.frame has columns SpecID, SpecName, FieldName, Start, Width, and End. By using the keep or drop arguments, you are effectively filtering this data.frame for the fields you want to keep or drop.
 #' @examples
+#' require(dplyr)
 #' demo_specs <- import_specs("EmplDemogr")
 #' demo_file <- dhr_data("EmplDemogr")
 #'
-#' library(readr)
+#' require(readr)
 #'
 #' demo_data <- read_fwf( demo_file,
 #'                       col_positions = fwf_positions(
