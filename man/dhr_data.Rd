@@ -16,6 +16,7 @@ A character string containing the full file path of the desired file, including 
 This allows the user to obtain the full file path to the latest data. This function only works on finding the most current data and does not work on finding older datasets.
 }
 \examples{
+library(dplyr)
 jpact_file <- dhr_data("JPACT")
 jpact_file  # print the file path
 }

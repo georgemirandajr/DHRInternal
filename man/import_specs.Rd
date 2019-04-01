@@ -20,6 +20,7 @@ By default, import_specs() with no arguments specified returns a data.frame obje
 Returns the full table of specifications for fixed-width text files that are extracted weekly. You can explore the table for a full list of data fields that are available. The resulting table is designed to be used with the readr package to read text files.
 }
 \examples{
+library(dplyr)
 demo_specs <- import_specs("EmplDemogr")
 demo_file <- dhr_data("EmplDemogr")
 
