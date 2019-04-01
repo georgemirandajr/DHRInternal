@@ -3,12 +3,15 @@
 #' @param data_source A single string (character) that relates to one of the specification names. This must match the specification name exactly.
 #' @return A character string containing the full file path of the desired file, including the server name. This requires that the user has access to the shared drives on the network. This function utilizes the check_folder_access() function to ensure that the analyst has access to the data.
 #' @examples
+#' ## Not run:
 #' require(dplyr)
+#' require(stringr)
 #' jpact_file <- dhr_data("JPACT")
 #' jpact_file  # print the file path
 
 
 # Data connections (sources)
+#' @export
 dhr_data <- function( data_source ) {
 
     # Check folder access
@@ -150,7 +153,7 @@ dhr_data <- function( data_source ) {
         vacancyFile <- max(list.files(dir))
 
         # Remove the double forward-slash with a single slash
-        dir <- str_replace(dir, "//[0-9]", "/2")
+        dir <- stringr::str_replace(dir, "//[0-9]", "/2")
 
         vacancyFile <- paste0(dir, "/", vacancyFile)
 
