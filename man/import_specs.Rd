@@ -20,14 +20,16 @@ By default, import_specs() with no arguments specified returns a data.frame obje
 Returns the full table of specifications for fixed-width text files that are extracted weekly. You can explore the table for a full list of data fields that are available. The resulting table is designed to be used with the readr package to read text files.
 }
 \examples{
-library(dplyr)
+## Not run:
+require(dplyr)
+require(stringr)
 demo_specs <- import_specs("EmplDemogr")
 demo_file <- dhr_data("EmplDemogr")
 
-library(readr)
+require(readr)
 
-demo_data <- read_fwf( demo_file,
-                      col_positions = fwf_positions(
+demo_data <- readr::read_fwf( demo_file,
+                      col_positions = readr::fwf_positions(
                                       start = demo_specs$Start,
                                       end = demo_specs$End ,
                                       col_names = demo_specs$FieldName))
