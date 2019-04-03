@@ -4,7 +4,10 @@ Title: DHR Data Analytics
 Version: 0.1.0
 Imports:
     dplyr (>= 0.7.4),
-    stringr
+    stringr,
+    purrr,
+    rlang,
+    lubridate
 Author: George Miranda
 Maintainer: George Miranda <georgemirandajr@gmail.com>
 Description: A package for DHR analysts to get started in R quickly.
