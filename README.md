@@ -78,7 +78,8 @@ library(data.table)
 jpact_data <- data.table::setDT(readr::read_fwf( jpact_file,  # the file path
                                               skip = 1,       # first row is metadata
                                               progress = FALSE,  # no need to print a progress bar to console
-                                              col_types = paste(rep("c", length(jpact_specs$FieldName)), collapse = ""),
+                                              col_types = paste( rep("c", length(jpact_specs$FieldName)), 
+                                                                 collapse = "" ),
                                               fwf_positions(jpact_specs$Start,
                                                             jpact_specs$End,
                                                             col_names = jpact_specs$FieldName)))
