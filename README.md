@@ -7,6 +7,9 @@ This package contains functions that:
  3. Provides specifications for importing datasets, which can also help you explore the fields that are available in all datasets.
  4. Provides a function that obtains the latest datasets on the LAC network. 
 
+Install this package by running: `devtools::install_github("georgemirandajr/DHRInternal")`
+Or find it on Dropbox at https://www.dropbox.com/sh/836uuknhvv2u2dj/AAA_ifobe--SZ-YofPzfxdCya?dl=0
+
 ## Style
 Use `dhr_style()` to import a CSS file that has been used on other DHR work products. After using this function, you can always modify the CSS file to further improve the style of the work you are doing. The provided CSS file is simply meant to help you get started without having to think about the style too much right away.
 
