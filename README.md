@@ -76,7 +76,7 @@ jpact_specs <- DHRInternal::import_specs("JPACT",  # Identify the file specifica
 jpact_file <- dhr_data("JPACT")  # Obtain the file path to the current dataset
 
 library(readr)  # a package to read in fixed width text files (all our extracts are this type) 
-library(data.table)
+library(data.table) # just makes it faster to read large fixed-width files
 
 jpact_data <- data.table::setDT(readr::read_fwf( jpact_file,  # the file path
                                               skip = 1,       # first row is metadata
@@ -86,4 +86,19 @@ jpact_data <- data.table::setDT(readr::read_fwf( jpact_file,  # the file path
                                               fwf_positions(jpact_specs$Start,
                                                             jpact_specs$End,
                                                             col_names = jpact_specs$FieldName)))
+</code></pre>
+
+## And Filtering Data
+<pre><code>
+require(lubridate)
+# Find the records of current employees
+jpact %>%
+   record_search(
+       list(
+           EXPIRATION_DT = c(mdy("12319999")) ,
+           HOME_DEPT_CD = grep("GJ|NL|SC|NB", unique(jpact$HOME_DEPT_CD), value = TRUE, invert = TRUE),
+           EMPLMT_STA_CD = c("A"),
+           SUB_TITLE_CD = c("A", "D", "L", "N")
+       )
+   )
 </code></pre>
