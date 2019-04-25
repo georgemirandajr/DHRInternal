@@ -7,6 +7,9 @@ This package contains functions that:
  3. Provides specifications for importing datasets, which can also help you explore the fields that are available in all datasets.
  4. Provides a function that obtains the latest datasets on the LAC network. 
 
+Install this package by running: `devtools::install_github("georgemirandajr/DHRInternal")`
+Or find it on Dropbox at https://www.dropbox.com/sh/836uuknhvv2u2dj/AAA_ifobe--SZ-YofPzfxdCya?dl=0
+
 ## Style
 Use `dhr_style()` to import a CSS file that has been used on other DHR work products. After using this function, you can always modify the CSS file to further improve the style of the work you are doing. The provided CSS file is simply meant to help you get started without having to think about the style too much right away.
 
@@ -66,17 +69,36 @@ demo_specs <- import_specs("EmplDemogr", drop = c("Prefix", "Suffix", "HomeDeptC
 ## Example of Putting It All Together
 
 <pre><code>
-demo_specs <- import_specs("EmplDemogr")  # Identify the file specifications you want
+jpact_specs <- DHRInternal::import_specs("JPACT",  # Identify the file specifications you want
+                                           keep = c("EMPLOYEE_ID", "TITLE_CD", "SUB_TITLE_CD", "HOME_DEPT_CD", 
+                                                    "EMPLMT_STA_CD", "EXPIRATION_DT", "PERS_ACTN_CD", "JOB_APPT_DT") )  
 
-demo_file <- dhr_data("EmplDemogr")  # Obtain the file path to the current dataset
+jpact_file <- dhr_data("JPACT")  # Obtain the file path to the current dataset
 
 library(readr)  # a package to read in fixed width text files (all our extracts are this type) 
+library(data.table) # just makes it faster to read large fixed-width files
 
-demo_data <- read_fwf(demo_file,         # the file path
-         col_positions = fwf_positions(  
-             start = demo_specs$Start,         # start position based on demo_specs
-             end = demo_specs$End,             # end position based on demo_specs
-             col_names = demo_specs$FieldName  # column names for the text file
-             )
-         )
+jpact_data <- data.table::setDT(readr::read_fwf( jpact_file,  # the file path
+                                              skip = 1,       # first row is metadata
+                                              progress = FALSE,  # no need to print a progress bar to console
+                                              col_types = paste( rep("c", length(jpact_specs$FieldName)), 
+                                                                 collapse = "" ),
+                                              fwf_positions(jpact_specs$Start,
+                                                            jpact_specs$End,
+                                                            col_names = jpact_specs$FieldName)))
+</code></pre>
+
+## And Filtering Data
+<pre><code>
+require(lubridate)
+# Find the records of current employees
+jpact %>%
+   record_search(
+       list(
+           EXPIRATION_DT = c(mdy("12319999")) ,
+           HOME_DEPT_CD = grep("GJ|NL|SC|NB", unique(jpact$HOME_DEPT_CD), value = TRUE, invert = TRUE),
+           EMPLMT_STA_CD = c("A"),
+           SUB_TITLE_CD = c("A", "D", "L", "N")
+       )
+   )
 </code></pre>
