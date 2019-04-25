@@ -4,53 +4,31 @@
 \alias{record_search}
 \title{Filter employee records}
 \usage{
-record_search(df, filter_list, date, grp)
+record_search(df, filter_list)
 }
 \arguments{
 \item{df}{The data.frame to which the criteria list is applied.}
 
 \item{filter_list}{A list of criteria.}
-
-\item{date}{(Optional) A date or character vector of length 1.}
-
-\item{grp}{(Optional) A character vector of length 1 that specifies how to group the data.}
 }
 \value{
-A data.frame that has been filtered to show the employee records or grouped by the specified variable and displayed with a count. Use this function to find current employees based on any number of criteria. The only criteria that must be provided is the EXPIRATION_DT being equal to 12319999.
+A data.frame that has been filtered to show the most recent employee records. Use this function to find current employees based on any number of criteria. The only criteria that must be provided is the EXPIRATION_DT being equal to 12319999.
 }
 \description{
-This allows users to filter a data.frame using an arbitrary list of criteria. You can search for current employees using EXPIRATION_DT = "12319999" in your list of criteria, or employees at a specified time using the optional arguments date and grp. This function and other filtering functions in this package are based on the JPACT extract, which contains a few of the required column names (e.g., APPOINTMENT_ID, EMPLOYEE_ID)
+This function allows users/analysts to filter a data.frame using an arbitrary list of criteria. This function and other filtering functions in this package are based on the JPACT extract, which contains a few of the required column names (e.g., APPOINTMENT_ID, EMPLOYEE_ID)
 }
 \examples{
 ## Not run:
 require(lubridate)
-# Find the records of current employees
+# Find the queried records and then get a count
 jpact \%>\%
    record_search(
        list(
            EXPIRATION_DT = c(mdy("12319999")) ,
            HOME_DEPT_CD = grep("GJ|NL|SC|NB", unique(jpact$HOME_DEPT_CD), value = TRUE, invert = TRUE),
-           EMPLMT_STA_CD = c("A"),
+           EMPLMT_STA_CD = c("A") ,
            SUB_TITLE_CD = c("A", "D", "L", "N")
        )
-   )
-
-# Same as above, but grouped by department code
-record_search(df = jpact, grp = HOME_DEPT_CD, filter_list = list(
-EXPIRATION_DT = mdy("12319999"),
-HOME_DEPT_CD = grep("GJ|NL|SC|NB", unique(jpact$HOME_DEPT_CD), value = TRUE, invert = TRUE),
-EMPLMT_STA_CD = c("A") ,
-SUB_TITLE_CD = c("A", "D", "L", "N") ) )
-
-# Find employees at a specified time
-record_search(df = jpact, date = mdy("01012014"), filter_list = list(
-HOME_DEPT_CD = grep("GJ|NL|SC|NB", unique(jpact$HOME_DEPT_CD), value = TRUE, invert = TRUE),
-EMPLMT_STA_CD = c("A") ,
-SUB_TITLE_CD = c("A", "D", "L", "N") ) )
-
-# Same filter as above, but now grouped
-record_search(df = jpact, date = mdy("01012014"), grp = HOME_DEPT_CD, filter_list = list(
-HOME_DEPT_CD = grep("GJ|NL|SC|NB", unique(jpact$HOME_DEPT_CD), value = TRUE, invert = TRUE),
-EMPLMT_STA_CD = c("A") ,
-SUB_TITLE_CD = c("A", "D", "L", "N") ) )
+   ) \%>\%
+   nrow()
 }
